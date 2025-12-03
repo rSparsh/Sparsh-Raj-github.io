@@ -723,6 +723,12 @@ html, body {
   margin-right: 6px;
 }
 
+.project-cert-logo {
+  width: 28px;
+  height: 28px;
+  vertical-align: middle;
+}
+
 .hero-photo {
   display: flex;
   align-items: center;
