@@ -13,7 +13,7 @@
   --border-subtle: #1f2933;
   --text-main: #f9fafb;
   --text-muted: #9ca3af;
-  --text-soft: #6b7280;
+  --text-soft: #d1d3d7;
   --radius-card: 16px;
 }
 
@@ -82,7 +82,7 @@ html, body {
   gap: 0.4rem;
   font-size: 0.78rem;
   text-decoration: none;
-  color: var(--text-muted);
+  color: #cfd3d9;
   padding: 0.22rem 0.55rem;
   border-radius: 999px;
   border: 1px solid rgba(148, 163, 184, 0.35);
@@ -120,7 +120,7 @@ html, body {
   margin: 0;
   font-size: 0.98rem;
   line-height: 1.6;
-  color: var(--text-muted);
+  color: #c8cace;
 }
 
 .hero-meta {
@@ -258,7 +258,7 @@ html, body {
 .strength-card p {
   margin: 0 0 0.7rem;
   font-size: 0.86rem;
-  color: var(--text-soft);
+  color: #d6d7d9;
 }
 
 .strength-card ul {
@@ -268,7 +268,7 @@ html, body {
 
 .strength-card li {
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: #c5c8ce;
   margin-bottom: 0.25rem;
 }
 
@@ -333,7 +333,7 @@ html, body {
 
 .exp-points li {
   font-size: 0.83rem;
-  color: var(--text-muted);
+  color: #c2cad9;
   margin-bottom: 0.35rem;
 }
 
@@ -349,7 +349,7 @@ html, body {
   border-radius: 999px;
   border: 1px solid rgba(148, 163, 184, 0.55);
   background: rgba(15, 23, 42, 0.95);
-  color: var(--text-soft);
+  color: #e0dfe6;
 }
 
 .experience-side {
@@ -383,14 +383,14 @@ html, body {
 .side-card ul {
   margin: 0;
   padding-left: 1.05rem;
-  color: var(--text-muted);
+  color: #b9bdc4;
 }
 
 /* Projects */
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 1.5rem;
 }
 
@@ -514,7 +514,7 @@ html, body {
 
 .project-points li {
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: #c0c9d8;
   margin-bottom: 0.25rem;
 }
 
@@ -744,3 +744,21 @@ html, body {
   border: 4px solid #fff;
   box-shadow: 0 2px 12px rgba(0,0,0,0.12);
 }
+
+.project-title-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-title-link:hover h3 {
+  text-decoration: underline;
+}
+
+.section-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  fill: var(--accent);
+  vertical-align: middle;
+}
+

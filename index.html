@@ -82,9 +82,9 @@
               <p>Designing modular, service–oriented architectures, defining API contracts, and making
               data–flow decisions that keep systems debuggable and evolvable.</p>
               <ul>
-                <li>Domain & boundary modelling</li>
-                <li>REST & gRPC API design</li>
-                <li>Data ownership & consistency trade–offs</li>
+                <li>Domain modeling with clear service and data boundaries</li>
+                <li>REST and gRPC API design for internal and external consumers</li>
+                <li>Data ownership decisions and consistency trade-offs</li>
               </ul>
             </article>
             <article class="card strength-card">
@@ -92,19 +92,20 @@
               <p>Building systems that stay fast and predictable under load with a bias for observability
               and graceful failure over blind heroics.</p>
               <ul>
-                <li>Concurrency & backpressure</li>
-                <li>Resiliency patterns (timeouts, retries, circuit breakers)</li>
-                <li>Performance testing with realistic traffic models</li>
+                <li>Concurrency control and backpressure handling under load</li>
+                <li>Resiliency patterns: timeouts, retries, and circuit breakers</li>
+                <li>Performance testing using realistic traffic and failure scenarios</li>
               </ul>
             </article>
             <article class="card strength-card">
               <h3>Messaging & Async Systems</h3>
-              <p>Leveraging queues and Pub/Sub for decoupling, smoothing traffic, and keeping latency
+              <p>Leveraging, webflux, queues and Pub/Sub for decoupling, smoothing traffic, and keeping latency
               predictable for user–facing flows.</p>
               <ul>
-                <li>GCP Pub/Sub & MQ integrations</li>
-                <li>Event–driven workflows</li>
-                <li>Retry, backoff, idempotency & DLQs</li>
+                <li>GCP Pub/Sub and MQ–based messaging integrations</li>
+                <li>Event-driven workflows with clear producer–consumer boundaries</li>
+                <li>Resiliency patterns: retries, exponential backoff, idempotency, and DLQs</li>
+                <li>Delivery reconciliation with webhooks and graceful fallback handling</li>
               </ul>
             </article>
           </div>
@@ -187,21 +188,22 @@
             <aside class="experience-side">
               <h3 class="side-title">Recent architecture work</h3>
               <div class="card side-card">
-                <h4>GCP migration for reservation flows</h4>
-                <p>Re–platformed key flows to GCP with a focus on observability, resilience and blast–radius control.</p>
+                <h4>Exporting VM Rule Analytics to D&A Platform</h4>
+                <p>Designed a non-blocking analytics export pipeline to surface rule-execution insights for Data & Analytics teams.</p>
                 <ul>
-                  <li>Strangled legacy pieces behind new APIs.</li>
-                  <li>Introduced structured logging and tracing.</li>
-                  <li>Used canary and phased rollouts to reduce risk.</li>
+                  <li>Captured high-volume analytics using structured SLF4J logging without impacting request latency.</li>
+                  <li>Exported analytics asynchronously to GCP Cloud Storage (gsutil) to keep main execution paths non-blocking.</li>
+                  <li>Published curated analytical events to Google Pub/Sub for near-real-time, decoupled consumption.</li>
                 </ul>
               </div>
-
               <div class="card side-card">
-                <h4>Subscription validation for airlines</h4>
-                <p>Designed and implemented subscription validation logic for Air France, integrating multiple services and queues.</p>
+                <h4>Air France Subscription Validation Service</h4>
+                <p>Designed and integrated a backend service to validate airline subscriptions via external partner gateways.</p>
                 <ul>
-                  <li>Separated synchronous validation from async enrichment.</li>
-                  <li>Idempotent message processing with retry & DLQ strategy.</li>
+                  <li>Built a Java 17 + Spring Boot service using REST and gRPC for synchronous validation flows.</li>
+                  <li>Implemented idempotent request handling to ensure safe retries when interacting with external gateways.</li>
+                  <li>Persisted subscription and rule-mapping data in GCP Datastore using JSON-based tables.</li>
+                  <li>Used Pub/Sub and MQ to decouple validation, enrichment, and downstream processing.</li>
                 </ul>
               </div>
             </aside>
@@ -216,7 +218,12 @@
           <div class="projects-grid">
             <article class="card project-card">
               <header class="project-header">
-                <h3>Unified Marketing Gateway</h3>
+                <a href="https://github.com/rSparsh/Unified-Marketing-Gateway"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="project-title-link">
+                  <h3>Unified Marketing Gateway</h3>
+                </a>
                 <a href="https://github.com/rSparsh/Unified-Marketing-Gateway" target="_blank" rel="nonreferer" aria-label="GitHub Repository">
                   <svg class="project-cert-logo" fill="white" xmlns="http://www.w3.org/2000/svg" aria-label="GitHub Logo">
                     <path d="M12 2C6.477 2 2 6.484 2 12.012c0 4.418 2.867 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.529 2.341 1.088 2.91.833.091-.646.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.254-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.396.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.579.688.481C19.135 20.174 22 16.426 22 12.012 22 6.484 17.523 2 12 2z"/>
@@ -225,68 +232,86 @@
                 <p class="project-tech">Java · Spring Boot · WebFlux</p>
               </header>
               <p class="project-summary">
-                Reactive gateway that unifies marketing integrations (Telegram) behind a consistent API.
-                Async pipelines handle fan–out, retries, and backoff without overloading providers.
+                State-driven, reactive notification platform delivering messages across Telegram, WhatsApp, and SMS
+                with strong idempotency, delivery tracking, reconciliation, and automated fallback routing.
               </p>
 
               <div class="system-diagram">
-                <!-- Row 1: Clients -> API -> Platform Selector -->
+
+                <!-- Row 1: Clients -->
                 <div class="sd-row">
                   <div class="sd-box sd-type-client">Clients / CRM</div>
                   <div class="sd-arrow">→</div>
-                  <div class="sd-box sd-type-edge">Unified Marketing<br/>Gateway API</div>
-                  <div class="sd-arrow">→</div>
-                  <div class="sd-box sd-type-control">Platform Selector<br/>&amp; Routing</div>
+                  <div class="sd-box sd-type-edge">
+                    Unified Notification API
+                  </div>
                 </div>
 
-                <!-- Row 2: Selector -> Reactive Pipeline -> Channel Adapters -->
+                <!-- Row 2: Core Platform -->
                 <div class="sd-row">
                   <div class="sd-spacer"></div>
                   <div class="sd-arrow">↓</div>
-                  <div class="sd-box sd-type-queue">
-                    Reactive Processing Pipeline<br/>
+                  <div class="sd-box sd-type-control">
+                    Reliable Delivery Platform<br/>
                     <span class="sd-sub">
-        Validation · Payload Builder · Rate Limiter
+        Idempotency · State Tracking · Async Processing
       </span>
                   </div>
+                </div>
+
+                <!-- Row 3: Channels -->
+                <div class="sd-row">
+                  <div class="sd-spacer"></div>
                   <div class="sd-arrow">→</div>
                   <div class="sd-box-group">
-                    <div class="sd-box sd-type-worker small">Telegram<br/>adapter</div>
-                    <div class="sd-box sd-type-worker small">WhatsApp<br/>adapter</div>
-                    <div class="sd-box sd-type-worker small">SMS / Email<br/>adapters</div>
+                    <div class="sd-box sd-type-worker small">Telegram</div>
+                    <div class="sd-box sd-type-worker small">WhatsApp</div>
+                    <div class="sd-box sd-type-worker small">SMS</div>
                   </div>
                 </div>
 
-                <!-- Row 3: Adapters -> Providers + Metrics -->
+                <!-- Row 4: Reliability Controls -->
                 <div class="sd-row">
                   <div class="sd-spacer"></div>
                   <div class="sd-arrow">↓</div>
-                  <div class="sd-box sd-type-state">
-                    Provider APIs<br/>
+                  <div class="sd-box sd-type-control">
+                    Reliability &amp; Recovery<br/>
                     <span class="sd-sub">
-        Telegram · WhatsApp · SMS · Email · Push
-      </span>
-                  </div>
-                  <div class="sd-arrow">→</div>
-                  <div class="sd-box sd-type-observe small">
-                    Metrics &amp; Observability<br/>
-                    <span class="sd-sub">
-        Latency · Errors · Per-channel stats
+        Webhooks · Reconciliation · Fallback Routing
       </span>
                   </div>
                 </div>
+
+                <!-- Row 5: Observability -->
+                <div class="sd-row">
+                  <div class="sd-spacer"></div>
+                  <div class="sd-arrow">↓</div>
+                  <div class="sd-box sd-type-observe">
+                    Metrics &amp; Observability
+                  </div>
+                </div>
+
               </div>
 
+
+
               <ul class="project-points">
-                <li>Separated public API from async pipelines to keep p99 latency small and predictable.</li>
-                <li>Implemented rate limiting, retry with exponential backoff, and dead–letter handling per provider.</li>
-                <li>Designed contracts to keep new channels plug–and–play without impacting existing clients.</li>
+                <li>Designed a state-driven, idempotent delivery pipeline to guarantee at-most-once execution per channel under retries, concurrency, and webhook replays.</li>
+                <li>Implemented delivery state tracking with webhook ingestion and reconciliation to handle eventual consistency and missing provider events.</li>
+                <li>Built automated fallback routing (WhatsApp → SMS) triggered by delivery state rather than immediate failures, preventing duplicate or spammy sends.</li>
+                <li>Used reactive execution with controlled concurrency and backoff to safely fan-out messages without overloading external providers.</li>
+                <li>Added metrics and observability to track latency, in-flight requests, failures, and fallback behavior across channels.</li>
               </ul>
             </article>
 
             <article class="card project-card">
               <header class="project-header">
-                <h3>Smart Waste Management</h3>
+                <a href="https://drive.google.com/file/d/1_ADKEBsy97F99YVXK3jbjW7WjOC3IC-v/preview"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="project-title-link">
+                  <h3>Smart Waste Management</h3>
+                </a>
                 <a href="https://drive.google.com/file/d/1_ADKEBsy97F99YVXK3jbjW7WjOC3IC-v/preview"
                    target="_blank"
                    rel="noreferrer noopener"
@@ -346,7 +371,12 @@
               <div class="section-underline"></div>
               <div class="tag-groups">
                 <div class="tag-group">
-                  <div class="tag-group-label">Backend</div>
+                  <div class="tag-group-label">
+                    <svg class="section-icon" viewBox="0 0 24 24">
+                      <path d="M4 4h16v4H4zm0 6h16v4H4zm0 6h16v4H4z"/>
+                    </svg>
+                    Backend
+                  </div>
                   <div class="tag-row">
                     <span class="tag">Java (8/17)</span>
                     <span class="tag">Spring Boot</span>
@@ -356,7 +386,12 @@
                   </div>
                 </div>
                 <div class="tag-group">
-                  <div class="tag-group-label">Cloud & Infra</div>
+                  <div class="tag-group-label">
+                    <svg class="section-icon" viewBox="0 0 24 24">
+                      <path d="M6 19h11a4 4 0 0 0 .5-7.97A5 5 0 0 0 7 8a4 4 0 0 0-1 7.75z"/>
+                    </svg>
+                    Cloud & Infra
+                  </div>
                   <div class="tag-row">
                     <span class="tag">GCP</span>
                     <span class="tag">OCI</span>
@@ -370,7 +405,12 @@
                   </div>
                 </div>
                 <div class="tag-group">
-                  <div class="tag-group-label">Data & Testing</div>
+                  <div class="tag-group-label">
+                    <svg class="section-icon" viewBox="0 0 24 24">
+                      <path d="M12 2C7 2 3 3.79 3 6v12c0 2.21 4 4 9 4s9-1.79 9-4V6c0-2.21-4-4-9-4z"/>
+                    </svg>
+                    Data & Testing
+                  </div>
                   <div class="tag-row">
                     <span class="tag">SQL</span>
                     <span class="tag">PostgreSQL</span>
