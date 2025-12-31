@@ -57,7 +57,7 @@
               Backend engineer with 2.5+ years of full–time experience (plus 1.5 years internship) building
               resilient, high–throughput systems in travel tech and fintech. Strong focus on Java (8/17),
               Spring Boot, Ruby on Rails, and cloud–native architectures on GCP and OCI. Experienced with
-              migrations, messaging systems (Pub/Sub, MQ), performance testing, and production reliability.
+              migrations, messaging systems (Pub/Sub, Kafka, MQ), performance testing, and production reliability.
             </p>
             <div class="hero-meta">
               <span>India</span>
@@ -232,8 +232,7 @@
                 <p class="project-tech">Java · Spring Boot · WebFlux</p>
               </header>
               <p class="project-summary">
-                State-driven, reactive notification platform delivering messages across Telegram, WhatsApp, and SMS
-                with strong idempotency, delivery tracking, reconciliation, and automated fallback routing.
+                State-driven, reactive notification platform delivering messages across Telegram, WhatsApp, and SMS using Kafka-backed durable ingestion, strong idempotency, delivery tracking, reconciliation, and automated fallback routing.
               </p>
 
               <div class="system-diagram">
@@ -247,7 +246,19 @@
                   </div>
                 </div>
 
-                <!-- Row 2: Core Platform -->
+                <!-- Row 2: Kafka Ingestion -->
+                <div class="sd-row">
+                  <div class="sd-spacer"></div>
+                  <div class="sd-arrow">↓</div>
+                  <div class="sd-box sd-type-queue">
+                    Kafka Ingestion Buffer<br/>
+                    <span class="sd-sub">
+        Durable · Replayable · Decoupled
+      </span>
+                  </div>
+                </div>
+
+                <!-- Row 3: Core Platform -->
                 <div class="sd-row">
                   <div class="sd-spacer"></div>
                   <div class="sd-arrow">↓</div>
@@ -259,7 +270,7 @@
                   </div>
                 </div>
 
-                <!-- Row 3: Channels -->
+                <!-- Row 4: Channels -->
                 <div class="sd-row">
                   <div class="sd-spacer"></div>
                   <div class="sd-arrow">→</div>
@@ -270,7 +281,7 @@
                   </div>
                 </div>
 
-                <!-- Row 4: Reliability Controls -->
+                <!-- Row 5: Reliability Controls -->
                 <div class="sd-row">
                   <div class="sd-spacer"></div>
                   <div class="sd-arrow">↓</div>
@@ -282,7 +293,7 @@
                   </div>
                 </div>
 
-                <!-- Row 5: Observability -->
+                <!-- Row 6: Observability -->
                 <div class="sd-row">
                   <div class="sd-spacer"></div>
                   <div class="sd-arrow">↓</div>
@@ -295,12 +306,15 @@
 
 
 
+
               <ul class="project-points">
-                <li>Designed a state-driven, idempotent delivery pipeline to guarantee at-most-once execution per channel under retries, concurrency, and webhook replays.</li>
-                <li>Implemented delivery state tracking with webhook ingestion and reconciliation to handle eventual consistency and missing provider events.</li>
-                <li>Built automated fallback routing (WhatsApp → SMS) triggered by delivery state rather than immediate failures, preventing duplicate or spammy sends.</li>
-                <li>Used reactive execution with controlled concurrency and backoff to safely fan-out messages without overloading external providers.</li>
-                <li>Added metrics and observability to track latency, in-flight requests, failures, and fallback behavior across channels.</li>
+                <li>Introduced Kafka as a durable ingestion layer to decouple client traffic from delivery execution, enabling safe replay and recovery across restarts.</li>
+
+                <li>Designed a state-driven, idempotent delivery pipeline guaranteeing at-most-once execution per channel under retries, concurrency, and Kafka or webhook replays.</li>
+                <li>Implemented delivery state tracking with webhook ingestion and reconciliation to handle eventual consistency and missing provider callbacks.</li>
+                <li>Built automated fallback routing (WhatsApp → SMS) triggered by delivery state transitions rather than immediate failures, preventing duplicate or spammy sends.</li>
+                <li>Used reactive execution with controlled concurrency and backoff to safely fan-out Kafka-consumed events without overloading external providers.</li>
+                <li>Added metrics and observability to track ingestion lag, latency, in-flight requests, failures, and cross-channel fallback behavior.</li>
               </ul>
             </article>
 
@@ -396,6 +410,7 @@
                     <span class="tag">GCP</span>
                     <span class="tag">OCI</span>
                     <span class="tag">AWS (messaging)</span>
+                    <span class="tag">Kafka</span>
                     <span class="tag">Kubernetes</span>
                     <span class="tag">Linux/Ubuntu</span>
                     <span class="tag">Git</span>
